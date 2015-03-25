@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
-- (IBAction)btnRefreshPress:(id)sender;
-@property (strong, nonatomic) IBOutlet UITableView *tblStudents;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnRefreshPress;
+@property (weak, nonatomic) IBOutlet UITableView *tblStudents;
 
 @end
 

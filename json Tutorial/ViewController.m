@@ -13,9 +13,9 @@
 NSString        *dataPost;
 NSDictionary    *jsonResponse;
 NSMutableArray  *aStudentName;
-NSMutableArray  *aId;
-NSMutableArray  *aApellidos;
-NSMutableArray  *aEdades;
+NSMutableArray  *aID;
+NSMutableArray  *aApellido;
+NSMutableArray  *aEdad;
 
 @interface ViewController ()
 
@@ -32,50 +32,6 @@ NSMutableArray  *aEdades;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-/***********************************************************************************************
- Table Functions
- **********************************************************************************************/
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-//-------------------------------------------------------------------------------
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    
-    return aStudentName.count;
-}
-//-------------------------------------------------------------------------------
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 64;
-}
-
-//-------------------------------------------------------------------------------
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"cellStudents");
-    static NSString *CellIdentifier = @"cellStudents";
-    
-    cellStudents *cell = (cellStudents *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil)
-    {
-        [tableView registerNib:[UINib nibWithNibName:@"cellStudents" bundle:nil] forCellReuseIdentifier:@"cellStudents"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"cellStudents"];
-    }
-    
-    cell.selectionStyle     = UITableViewCellSelectionStyleNone;
-    cell.lblName.text       = [NSString stringWithFormat:@"%@",aStudentName[indexPath.row]];
-    cell.lblId.text =aId[indexPath.row ];
-    cell.lblApellido.text=aApellidos[indexPath.row];
-    cell.lblEdad.text=aEdades[indexPath.row];
-    
-    return cell;
-}
-//-------------------------------------------------------------------------------
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
 }
 
 /*******************************************************************************
@@ -136,18 +92,63 @@ NSMutableArray  *aEdades;
     }
 //-------------------------------------------------------------------------------
     NSLog(@"jsonResponse %@", jsonResponse);
-    aId= [jsonResponse valueForKey:@"id"];
+    aID        = [jsonResponse valueForKey:@"id"];
     aStudentName        = [jsonResponse valueForKey:@"nombre"];
-    aApellidos =[jsonResponse valueForKey:@"apellidos"];
-    aEdades =[jsonResponse valueForKey:@"edad"];
-    NSLog(@"aStudentName %@", aStudentName);
+    aApellido       = [jsonResponse valueForKey:@"apellidos"];
+    aEdad        = [jsonResponse valueForKey:@"edad"];
+    
+    //NSLog(@"aStudentName %@", aStudentName);
     [self.tblStudents reloadData];
-    //[self.tblMain reloadData];
 }
 
-- (IBAction)btnRefreshPress:(id)sender
+/***********************************************************************************************
+ Table Functions
+ **********************************************************************************************/
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    return 1;
+}
+//-------------------------------------------------------------------------------
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    return aStudentName.count;
+}
+//-------------------------------------------------------------------------------
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 64;
+}
+
+//-------------------------------------------------------------------------------
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"cellStudents");
+    static NSString *CellIdentifier = @"cellStudents";
+    
+    cellStudents *cell = (cellStudents *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
+    {
+        [tableView registerNib:[UINib nibWithNibName:@"cellStudents" bundle:nil] forCellReuseIdentifier:@"cellStudents"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"cellStudents"];
+    }
+    
+    cell.selectionStyle     = UITableViewCellSelectionStyleNone;
+    cell.lblID.text         =aID[indexPath.row];
+    cell.lblName.text       =aStudentName[indexPath.row];
+    cell.lblApellidos.text  =aApellido[indexPath.row];
+    cell.lblEdad.text       =aEdad[indexPath.row];
+    
+    return cell;
+}
+//-------------------------------------------------------------------------------
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+}
+- (IBAction)btnPresRefresh:(id)sender {
     [self postService];
     [self.tblStudents reloadData];
 }
+
+
 @end

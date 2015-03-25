@@ -2,7 +2,7 @@
 //  cellStudents.m
 //  json Tutorial
 //
-//  Created by Walter Gonzalez Domenzain on 17/03/15.
+//  Created by Carolina Lopez on 17/03/15.
 //  Copyright (c) 2015 Smartplace. All rights reserved.
 //
 
